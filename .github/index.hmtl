@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Starter Pack – Digital Planner</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blush:#f9e4e4;--peach:#fde8d8;--mint:#d8f0e8;--lavender:#ece4f9;
+      --sky:#daeaf9;--cream:#fdf8f3;--ink:#2d2a26;--muted:#7a7470;
+      --accent:#c97b6e;--accent2:#7e6ebc;--white:#ffffff;--radius:18px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+    .hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.5rem;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--blush) 0%,var(--peach) 40%,var(--lavender) 100%)}
+    .hero::before,.hero::after{content:'';position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none}
+    .hero::before{width:420px;height:420px;background:var(--mint);top:-100px;left:-120px}
+    .hero::after{width:360px;height:360px;background:var(--sky);bottom:-80px;right:-80px}
+
+    .badge{display:inline-block;background:var(--white);color:var(--accent);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.38rem 1rem;border-radius:999px;margin-bottom:1.6rem;box-shadow:0 2px 12px rgba(0,0,0,.07);animation:fadeUp .6s ease both}
+    .hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,8vw,5.2rem);line-height:1.08;color:var(--ink);max-width:680px;animation:fadeUp .7s .1s ease both}
+    .hero h1 em{font-style:italic;color:var(--accent)}
+    .tagline{font-size:clamp(1.05rem,2.5vw,1.3rem);color:var(--muted);margin-top:.9rem;animation:fadeUp .7s .2s ease both}
+    .hero-desc{max-width:480px;font-size:.97rem;color:var(--muted);line-height:1.75;margin-top:1.4rem;animation:fadeUp .7s .3s ease both}
+    .cta-btn{display:inline-block;margin-top:2.2rem;background:var(--accent);color:var(--white);font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:600;padding:.95rem 2.4rem;border-radius:999px;text-decoration:none;box-shadow:0 6px 28px rgba(201,123,110,.35);transition:transform .2s,box-shadow .2s,background .2s;animation:fadeUp .7s .4s ease both}
+    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,123,110,.45);background:#b86b5e}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.35rem;color:var(--muted);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;animation:fadeUp .8s .8s ease both}
+    .scroll-hint span{font-size:1.2rem;animation:bounce 1.6s infinite}
+
+    .preview{padding:6rem 1.5rem;background:var(--white);text-align:center}
+    .section-label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent2);margin-bottom:.8rem}
+    .section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,5vw,2.8rem);line-height:1.2;color:var(--ink);max-width:560px;margin:0 auto .9rem}
+    .section-sub{color:var(--muted);font-size:.97rem;line-height:1.75;max-width:480px;margin:0 auto}
+
+    .planner-mockup{margin:3rem auto 0;max-width:540px;background:var(--cream);border-radius:var(--radius);padding:2rem;box-shadow:0 12px 48px rgba(0,0,0,.07);display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .mock-card{background:var(--white);border-radius:12px;padding:1.1rem 1rem;text-align:left;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+    .mock-card .icon{font-size:1.3rem;margin-bottom:.4rem}
+    .mock-card .mc-title{font-size:.78rem;font-weight:600;color:var(--ink);margin-bottom:.6rem}
+    .mock-bar{height:6px;border-radius:999px;margin-bottom:.4rem}
+    .bar-full{background:var(--blush)}.bar-75{background:var(--lavender);width:75%}.bar-50{background:var(--mint);width:50%}.bar-peach{background:var(--peach)}
+    .mock-card.tall{grid-column:span 2}
+
+    .included{padding:6rem 1.5rem;background:linear-gradient(160deg,var(--lavender) 0%,var(--sky) 100%);text-align:center}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;max-width:800px;margin:3rem auto 0}
+    .card{background:var(--white);border-radius:var(--radius);padding:1.8rem 1.4rem;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:transform .22s,box-shadow .22s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(0,0,0,.1)}
+    .card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+    .icon-blush{background:var(--blush)}.icon-mint{background:var(--mint)}.icon-peach{background:var(--peach)}.icon-lav{background:var(--lavender)}
+    .card h3{font-family:'DM Serif Display',serif;font-size:1.08rem;color:var(--ink);margin-bottom:.4rem}
+    .card p{font-size:.86rem;color:var(--muted);line-height:1.65}
+
+    .price-section{padding:6rem 1.5rem;background:var(--white);text-align:center}
+    .price-box{display:inline-block;background:linear-gradient(145deg,var(--blush),var(--peach));border-radius:24px;padding:3rem 3.5rem;box-shadow:0 12px 48px rgba(201,123,110,.15);margin-top:2rem}
+    .price-amount{font-family:'DM Serif Display',serif;font-size:clamp(3.5rem,12vw,5.5rem);color:var(--accent);line-height:1}
+    .price-amount sup{font-size:40%;vertical-align:super}
+    .price-note{margin-top:.6rem;font-size:.88rem;color:var(--muted);letter-spacing:.04em}
+    .price-cta{display:inline-block;margin-top:2rem;background:var(--accent);color:var(--white);font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;padding:1rem 2.6rem;border-radius:999px;text-decoration:none;box-shadow:0 6px 28px rgba(201,123,110,.35);transition:transform .2s,box-shadow .2s,background .2s}
+    .price-cta:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,123,110,.45);background:#b86b5e}
+    .trust-row{margin-top:1.6rem;display:flex;justify-content:center;align-items:center;gap:1.4rem;flex-wrap:wrap}
+    .trust-item{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--muted)}
+
+    footer{background:var(--ink);color:rgba(255,255,255,.5);text-align:center;padding:2rem 1.5rem;font-size:.84rem;letter-spacing:.03em}
+    footer span{color:rgba(255,255,255,.85);font-weight:500}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+    @media(max-width:520px){
+      .planner-mockup{grid-template-columns:1fr}
+      .mock-card.tall{grid-column:span 1}
+      .price-box{padding:2.2rem 2rem}
+      .trust-row{gap:.9rem}
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="badge">✨ Digital Download</div>
+  <h1>Student <em>Starter</em> Pack</h1>
+  <p class="tagline">Stay organized. Study better.</p>
+  <p class="hero-desc">Everything you need to take control of your semester — beautifully designed, ready to use the moment you download it.</p>
+  <a class="cta-btn" href="https://payhip.com/b/ZohxL" target="_blank" rel="noopener">Get Instant Access →</a>
+  <div class="scroll-hint"><span>↓</span>scroll to explore</div>
+</section>
+
+<section class="preview">
+  <p class="section-label">The Planner</p>
+  <h2 class="section-title">Simple, clean &amp; aesthetic — by design.</h2>
+  <p class="section-sub">No clutter, no overwhelm. Just a thoughtfully laid-out planner that keeps your goals, tasks, and schedule exactly where you can see them.</p>
+  <div class="planner-mockup">
+    <div class="mock-card">
+      <div class="icon">📅</div>
+      <div class="mc-title">Weekly View</div>
+      <div class="mock-bar bar-full" style="width:100%"></div>
+      <div class="mock-bar bar-75"></div>
+      <div class="mock-bar bar-50"></div>
+    </div>
+    <div class="mock-card">
+      <div class="icon">🕐</div>
+      <div class="mc-title">Daily Schedule</div>
+      <div class="mock-bar bar-peach" style="width:100%"></div>
+      <div class="mock-bar bar-full" style="width:60%"></div>
+      <div class="mock-bar bar-peach" style="width:80%"></div>
+    </div>
+    <div class="mock-card tall">
+      <div class="icon">📊</div>
+      <div class="mc-title">Habit &amp; Study Tracker</div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem">
+        <div style="background:var(--mint);border-radius:8px;padding:.3rem .7rem;font-size:.72rem;font-weight:600">M ✓</div>
+        <div style="background:var(--mint);border-radius:8px;padding:.3rem .7rem;font-size:.72rem;font-weight:600">T ✓</div>
+        <div style="background:var(--lavender);border-radius:8px;padding:.3rem .7rem;font-size:.72rem;font-weight:600">W ✓</div>
+        <div style="background:var(--blush);border-radius:8px;padding:.3rem .7rem;font-size:.72rem;font-weight:600">Th</div>
+        <div style="background:var(--blush);border-radius:8px;padding:.3rem .7rem;font-size:.72rem;font-weight:600">F</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="included">
+  <p class="section-label">What's Included</p>
+  <h2 class="section-title">Four tools. One pack. Total clarity.</h2>
+  <p class="section-sub">Each page was designed to be simple enough to actually use, every single day.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon icon-lav">🗓️</div>
+      <h3>Weekly Planner</h3>
+      <p>Plan your entire week at a glance — classes, deadlines, self-care and all.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-mint">⏰</div>
+      <h3>Daily Schedule</h3>
+      <p>Hour-by-hour layout so your time is always accounted for and focused.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-blush">📚</div>
+      <h3>Study Tracker</h3>
+      <p>Log subjects, sessions, and progress so you never lose sight of your goals.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-peach">💸</div>
+      <h3>Budget Tracker</h3>
+      <p>Keep your allowance in check — track spending and stay stress-free.</p>
+    </div>
+  </div>
+</section>
+
+<section class="price-section">
+  <p class="section-label">Pricing</p>
+  <h2 class="section-title">One small investment, one big upgrade.</h2>
+  <div class="price-box">
+    <div class="price-amount"><sup>₱</sup>40</div>
+    <p class="price-note">One-time purchase · No subscription · Yours forever</p>
+    <a class="price-cta" href="https://payhip.com/b/ZohxL" target="_blank" rel="noopener">Get Instant Access →</a>
+    <div class="trust-row">
+      <div class="trust-item">⚡ Instant download</div>
+      <div class="trust-item">📄 PDF format</div>
+      <div class="trust-item">🔒 Secure checkout</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>⬇ Instant download after payment.</span> &nbsp; Thank you for supporting a student creator. 🌸
+</footer>
+
+</body>
+</html>
